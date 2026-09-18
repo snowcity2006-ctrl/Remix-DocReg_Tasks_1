@@ -1,0 +1,8 @@
+{
+  "name": "Remix DocReg_Tasks_1",
+  "description": "Портативное приложение для регистрации и учета документооборота организации с сетевой БД SQLite и поддержкой Astra Linux",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "name": "docflow",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Портативная система учета документооборота организации для Astra Linux и Windows",
+  "author": {
+    "name": "DocFlow Team",
+    "email": "support@docflow.local"
+  },
+  "homepage": "https://github.com/docreg/docflow",
+  "main": "dist-electron/main.cjs",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port=3000 --host=0.0.0.0",
+    "build": "vite build",
+    "build:electron": "esbuild electron/main.ts --bundle --platform=node --target=node18 --outfile=dist-electron/main.cjs --external:electron --external:better-sqlite3 && esbuild electron/preload.ts --bundle --platform=node --target=node18 --outfile=dist-electron/preload.cjs --external:electron",
+    "preview": "vite preview",
+    "clean": "rm -rf dist dist-electron release server.js",
+    "lint": "tsc --noEmit",
+    "postinstall": "electron-builder install-app-deps",
+    "pack:linux": "npm run build && npm run build:electron && node electron/patch-glibc.cjs && electron-builder --linux AppImage deb -p never && node electron/patch-appimage.cjs",
+    "pack:win": "npm run build && npm run build:electron && electron-builder --win portable -p never",
+    "pack": "npm run build && npm run build:electron && electron-builder"
+  },
+  "dependencies": {
+    "@google/genai": "^2.4.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "@vitejs/plugin-react": "^5.0.4",
+    "better-sqlite3": "^11.8.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "vite": "^6.2.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.7.1",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "autoprefixer": "^10.4.21",
+    "electron": "28.3.3",
+    "electron-builder": "^24.13.3",
+    "esbuild": "^0.25.0",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2"
+  },
+  "build": {
+    "appId": "ru.docflow.app",
+    "productName": "DocFlow",
+    "afterPack": "electron/after-pack.cjs",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/main.cjs",
+      "dist-electron/preload.cjs",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/better-sqlite3/**"
+    ],
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "maintainer": "DocFlow Team <support@docflow.local>",
+      "category": "Office",
+      "executableName": "docflow-portable",
+      "executableArgs": [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-gpu-sandbox",
+        "--disable-dev-shm-usage"
+      ],
+      "desktop": {
+        "Name": "DocFlow",
+        "Type": "Application",
+        "Terminal": "false",
+        "Categories": "Office;"
+      },
+      "packageCategory": "office",
+      "synopsis": "Система учета документооборота организации",
+      "description": "Портативная система учета документооборота с многопользовательской базой данных SQLite на сетевом диске для Astra Linux и Windows"
+    },
+    "deb": {
+      "priority": "optional"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "executableName": "docflow-portable"
+    }
+  }
+}

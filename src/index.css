@@ -1,0 +1,501 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --bg-canvas: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-subsurface: #f1f5f9;
+    --bg-elevated: #f1f5f9;
+    --bg-hover: #e2e8f0;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    color-scheme: light;
+  }
+
+  html.dark, :root.dark {
+    --bg-canvas: #0F1115;
+    --bg-surface: #171A21;
+    --bg-subsurface: #12151B;
+    --bg-elevated: #1F222B;
+    --bg-hover: #2D3139;
+    --border-color: #2D3139;
+    --text-primary: #E0E0E0;
+    --text-secondary: #D1D5DB;
+    --text-muted: #9CA3AF;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* ==========================================================================
+   Светлая тема (Light Mode Overrides):
+   Когда класс .dark снят с <html>, цвета автоматически адаптируются к
+   светлой корпоративной палитре: чистый белый фон карточек, мягкие границы,
+   высококонтрастный текст и четкие инпуты.
+   ========================================================================== */
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html:not(.dark) .bg-\[\#0F1115\] {
+  background-color: #f8fafc !important;
+}
+
+html:not(.dark) input.bg-\[\#0F1115\],
+html:not(.dark) select.bg-\[\#0F1115\],
+html:not(.dark) textarea.bg-\[\#0F1115\],
+html:not(.dark) input.bg-\[\#171A21\],
+html:not(.dark) select.bg-\[\#171A21\],
+html:not(.dark) textarea.bg-\[\#171A21\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) input.bg-\[\#0F1115\]::placeholder,
+html:not(.dark) textarea.bg-\[\#0F1115\]::placeholder,
+html:not(.dark) input.bg-\[\#171A21\]::placeholder,
+html:not(.dark) textarea.bg-\[\#171A21\]::placeholder {
+  color: #94a3b8 !important;
+}
+
+html:not(.dark) .bg-\[\#12151B\],
+html:not(.dark) .bg-\[\#12151B\]\/60 {
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) .bg-\[\#171A21\] {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) .bg-\[\#1F222B\],
+html:not(.dark) .bg-\[\#1F222B\]\/60,
+html:not(.dark) .bg-\[\#1F222B\]\/70 {
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) .hover\:bg-\[\#1F222B\]:hover,
+html:not(.dark) .hover\:bg-\[\#1F222B\]\/60:hover,
+html:not(.dark) .hover\:bg-\[\#1F222B\]\/70:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .hover\:bg-\[\#2D3139\]:hover,
+html:not(.dark) .hover\:bg-\[\#2D3139\]\/40:hover {
+  background-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .bg-\[\#2D3139\] {
+  background-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .border-\[\#2D3139\],
+html:not(.dark) .border-\[\#2D3139\]\/40,
+html:not(.dark) .border-\[\#2D3139\]\/60,
+html:not(.dark) .border-\[\#2D3139\]\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .divide-\[\#2D3139\],
+html:not(.dark) .divide-\[\#2D3139\]\/40,
+html:not(.dark) .divide-\[\#2D3139\]\/60 {
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) .text-\[\#E0E0E0\] {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .text-gray-400 {
+  color: #64748b !important;
+}
+
+html:not(.dark) .text-gray-300 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-gray-200 {
+  color: #1e293b !important;
+}
+
+html:not(.dark) .hover\:text-white:hover,
+html:not(.dark) .hover\:text-\[\#E0E0E0\]:hover {
+  color: #0f172a !important;
+}
+
+/* Шапка таблицы зарегистрированных документов: цвет заливки как у элемента "+ Регистрация документа" (#2563eb / bg-blue-600) */
+#document-table-header,
+html:not(.dark) #document-table-header {
+  background-color: #2563eb !important;
+}
+
+#document-table-title,
+html:not(.dark) #document-table-title {
+  color: #ffffff !important;
+}
+
+/* Шапка таблицы задач: цвет заливки как у элемента "+ Новая задача" и белый шрифт надписи (#ffffff) */
+#task-table-header,
+html:not(.dark) #task-table-header {
+  background-color: #2563eb !important;
+}
+
+#task-table-title,
+html:not(.dark) #task-table-title,
+#task-table-header span,
+html:not(.dark) #task-table-header span {
+  color: #ffffff !important;
+}
+
+/* ==========================================================================
+   Элементы фильтров задач ("Всего задач", "В работе", "Срок сегодня", "Просрочено", "Принято"):
+   В светлой теме цвет текста названий и цифр счетчиков ВСЕГДА строго черный (#000000).
+   ========================================================================== */
+html:not(.dark) #task-status-counters button,
+html:not(.dark) #task-status-counters button span,
+html:not(.dark) #task-status-counters button div,
+html:not(.dark) #task-status-counters button p,
+html:not(.dark) #task-status-counters button .font-mono,
+html:not(.dark) #task-stat-all,
+html:not(.dark) #task-stat-all span,
+html:not(.dark) #task-stat-in-progress,
+html:not(.dark) #task-stat-in-progress span,
+html:not(.dark) #task-stat-due-today,
+html:not(.dark) #task-stat-due-today span,
+html:not(.dark) #task-stat-overdue,
+html:not(.dark) #task-stat-overdue span,
+html:not(.dark) #task-stat-accepted,
+html:not(.dark) #task-stat-accepted span {
+  color: #000000 !important;
+}
+
+/* Иконки на плашках фильтра сохраняют статусный цвет */
+html:not(.dark) #task-stat-all svg {
+  color: #2563eb !important;
+}
+html:not(.dark) #task-stat-in-progress svg {
+  color: #16a34a !important;
+}
+html:not(.dark) #task-stat-due-today svg {
+  color: #d97706 !important;
+}
+html:not(.dark) #task-stat-overdue svg {
+  color: #e11d48 !important;
+}
+html:not(.dark) #task-stat-accepted svg {
+  color: #2563eb !important;
+}
+
+/* Неактивное состояние плашек в светлой теме */
+html:not(.dark) #task-status-counters button:not([data-active="true"]) {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+html:not(.dark) #task-status-counters button:not([data-active="true"]):hover {
+  background-color: #f1f5f9 !important;
+  border-color: #94a3b8 !important;
+}
+
+html:not(.dark) #task-status-counters button:not([data-active="true"]) .font-mono {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* Активное состояние каждой из плашек в светлой теме: мягкий цветной фон, рамка цвета статуса и строго черный текст */
+html:not(.dark) #task-stat-all[data-active="true"] {
+  background-color: #e0f2fe !important;
+  border-color: #0284c7 !important;
+}
+html:not(.dark) #task-stat-all[data-active="true"] .font-mono {
+  background-color: #bae6fd !important;
+  border-color: #7dd3fc !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) #task-stat-in-progress[data-active="true"] {
+  background-color: #dcfce7 !important;
+  border-color: #16a34a !important;
+}
+html:not(.dark) #task-stat-in-progress[data-active="true"] .font-mono {
+  background-color: #bbf7d0 !important;
+  border-color: #86efac !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) #task-stat-due-today[data-active="true"] {
+  background-color: #fef3c7 !important;
+  border-color: #d97706 !important;
+}
+html:not(.dark) #task-stat-due-today[data-active="true"] .font-mono {
+  background-color: #fde68a !important;
+  border-color: #fcd34d !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) #task-stat-overdue[data-active="true"] {
+  background-color: #ffe4e6 !important;
+  border-color: #e11d48 !important;
+}
+html:not(.dark) #task-stat-overdue[data-active="true"] .font-mono {
+  background-color: #fecdd3 !important;
+  border-color: #fda4af !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) #task-stat-accepted[data-active="true"] {
+  background-color: #dbeafe !important;
+  border-color: #2563eb !important;
+}
+html:not(.dark) #task-stat-accepted[data-active="true"] .font-mono {
+  background-color: #bfdbfe !important;
+  border-color: #93c5fd !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   Шрифт и оформление табличных частей форм в светлой теме (Light Mode Tables):
+   Глубокий четкий темный шрифт (#0f172a / #1e293b), четкие заголовки,
+   повышенная контрастность текста в ячейках, строках, шапках и полях форм.
+   ========================================================================== */
+html:not(.dark) table {
+  color: #0f172a !important;
+}
+
+html:not(.dark) table thead,
+html:not(.dark) table thead tr,
+html:not(.dark) table th {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) table th span,
+html:not(.dark) table th div,
+html:not(.dark) table th p {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) table tbody {
+  color: #0f172a !important;
+}
+
+html:not(.dark) table tbody tr {
+  background-color: #ffffff;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) table tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+html:not(.dark) table td {
+  color: #0f172a !important;
+  border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) table td span,
+html:not(.dark) table td div,
+html:not(.dark) table td p {
+  color: #0f172a;
+}
+
+html:not(.dark) table td .text-gray-300,
+html:not(.dark) table td .text-gray-400,
+html:not(.dark) table td span.text-gray-300,
+html:not(.dark) table td span.text-gray-400 {
+  color: #1e293b !important;
+  font-weight: 500;
+}
+
+html:not(.dark) table td .font-mono {
+  color: #0f172a !important;
+  font-weight: 600;
+}
+
+html:not(.dark) table td .text-gray-500,
+html:not(.dark) table td span.text-gray-500 {
+  color: #475569 !important;
+  font-weight: 500;
+}
+
+html:not(.dark) table td.sticky,
+html:not(.dark) table th.sticky {
+  background-color: #ffffff !important;
+}
+
+html:not(.dark) table thead th.sticky {
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) table tbody tr:hover td.sticky {
+  background-color: #f8fafc !important;
+}
+
+/* Формы, поля ввода, выпадающие списки и метки в светлой теме */
+html:not(.dark) label {
+  color: #1e293b !important;
+  font-weight: 600;
+}
+
+/* Light mode badge and alert styling */
+html:not(.dark) [class*="bg-blue-950"] {
+  background-color: #eff6ff !important;
+  border-color: #bfdbfe !important;
+}
+
+html:not(.dark) [class*="bg-blue-950"] [class*="text-blue-300"],
+html:not(.dark) [class*="bg-blue-950"] [class*="text-blue-400"],
+html:not(.dark) [class*="text-blue-300"] {
+  color: #2563eb !important;
+}
+
+html:not(.dark) [class*="bg-emerald-950"] {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html:not(.dark) [class*="bg-amber-950"] {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+html:not(.dark) [class*="text-amber-100"],
+html:not(.dark) [class*="text-amber-200"],
+html:not(.dark) [class*="text-amber-300"] {
+  color: #b45309 !important;
+}
+
+html:not(.dark) [class*="bg-rose-950"] {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+}
+
+html:not(.dark) [class*="text-rose-300"] {
+  color: #e11d48 !important;
+}
+
+/* Catch-all safety for text-white in light mode when not on dark/colored buttons or badges */
+html:not(.dark) .text-white:not(
+  [class*="bg-blue-"],
+  [class*="bg-rose-"],
+  [class*="bg-red-"],
+  [class*="bg-emerald-"],
+  [class*="bg-green-"],
+  [class*="bg-indigo-"],
+  [class*="bg-purple-"],
+  [class*="bg-amber-"]
+) {
+  color: #0f172a !important;
+}
+
+html:not(.dark) button[class*="bg-blue-"] .text-white,
+html:not(.dark) button[class*="bg-rose-"] .text-white,
+html:not(.dark) button[class*="bg-emerald-"] .text-white,
+html:not(.dark) button[class*="bg-indigo-"] .text-white {
+  color: #ffffff !important;
+}
+
+html:not(.dark) option {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .shadow-xs,
+html:not(.dark) .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
+}
+
+html:not(.dark) .shadow-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.05) !important;
+}
+
+html:not(.dark) .shadow-xl,
+html:not(.dark) .shadow-2xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.06) !important;
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ==========================================================================
+   Отображение значка календаря (input[type="date"]) в темах
+   ========================================================================== */
+input[type="date"] {
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+/* Светлая тема: четкий темный значок календаря с высокой контрастностью */
+html:not(.dark) input[type="date"] {
+  color-scheme: light !important;
+}
+
+html:not(.dark) input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.8;
+}
+
+html:not(.dark) input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Темная тема: светлый контрастный значок календаря */
+html.dark input[type="date"],
+:root.dark input[type="date"] {
+  color-scheme: dark !important;
+}
+
+html.dark input[type="date"]::-webkit-calendar-picker-indicator,
+:root.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.85;
+}
+
+html.dark input[type="date"]::-webkit-calendar-picker-indicator:hover,
+:root.dark input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
