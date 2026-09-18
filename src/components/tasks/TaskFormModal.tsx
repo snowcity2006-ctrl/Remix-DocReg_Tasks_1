@@ -146,6 +146,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
   }, [employees, assigneeSearchQuery]);
 
   const handleToggleAssignee = (id: number) => {
+    setError(null);
     // Переключение чекбокса напротив сотрудника (работает как при создании, так и при редактировании)
     setSelectedAssigneeIds((prev) => {
       const exists = prev.includes(id);
@@ -157,6 +158,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
   };
 
   const handleSelectAllFiltered = () => {
+    setError(null);
     const idsToAdd = filteredEmployees.map((e) => e.id);
     setSelectedAssigneeIds((prev) => {
       const updated = Array.from(new Set([...prev, ...idsToAdd]));
@@ -173,6 +175,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
   };
 
   const handleSelectSingleAssignee = (id: number | '') => {
+    if (id) setError(null);
     setAssigneeId(id);
     if (id) {
       setSelectedAssigneeIds([id]);
@@ -214,6 +217,12 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
     }
     if (!plannedEndDate) {
       setError('Укажите плановую дату окончания');
+      return;
+    }
+
+    const hasAssignee = selectedAssigneeIds.length > 0 || (assigneeId !== '' && assigneeId !== null && assigneeId !== undefined);
+    if (!hasAssignee) {
+      setError('Поле «Ответственный» обязательно для заполнения. Пожалуйста, выберите сотрудника.');
       return;
     }
 
@@ -472,7 +481,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
             <div className="flex items-center justify-between flex-wrap gap-2">
               <label className="block text-xs font-medium text-gray-300 flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5 text-blue-400" />
-                <span>Ответственный</span>
+                <span>Ответственный *</span>
                 {!initialData && selectedAssigneeIds.length > 1 && (
                   <span className="ml-1 text-[11px] text-blue-400 font-semibold bg-blue-900/30 border border-blue-500/30 px-1.5 py-0.5 rounded-md">
                     выбрано: {selectedAssigneeIds.length}
@@ -500,7 +509,9 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
                 id="trigger-task-assignee-dropdown"
                 onClick={() => setIsAssigneeDropdownOpen((prev) => !prev)}
                 className={`w-full min-h-[42px] px-3.5 py-2 bg-[#0F1115] border rounded-xl text-xs flex items-center justify-between gap-2 cursor-pointer transition-colors ${
-                  isAssigneeDropdownOpen
+                  error && selectedAssigneeIds.length === 0 && !assigneeId
+                    ? 'border-rose-500 ring-1 ring-rose-500'
+                    : isAssigneeDropdownOpen
                     ? 'border-blue-500 ring-1 ring-blue-500'
                     : 'border-[#2D3139] hover:border-gray-500'
                 }`}
@@ -509,7 +520,7 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
                 <div className="flex items-center gap-1.5 flex-1 flex-wrap overflow-hidden min-w-0">
                   {selectedAssigneeIds.length === 0 ? (
                     <span className="text-gray-400 select-none">
-                      Не назначен (нажмите для выбора исполнителей)...
+                      Выберите ответственного сотрудника *
                     </span>
                   ) : selectedAssigneeIds.length === 1 ? (
                     (() => {
@@ -675,21 +686,23 @@ export const TaskFormModal: React.FC<TaskFormModalProps> = ({
 
                   {/* Список сотрудников с надежными интерактивными чекбоксами */}
                   <div className="max-h-56 overflow-y-auto space-y-1 pr-1">
-                    {/* Опция "Не назначен" */}
-                    <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleClearAllSelected();
-                      }}
-                      className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs cursor-pointer select-none transition-colors ${
-                        selectedAssigneeIds.length === 0
-                          ? 'bg-blue-600/15 text-blue-200 border border-blue-500/30 font-semibold'
-                          : 'text-gray-400 hover:bg-[#1F222B] hover:text-white'
-                      }`}
-                    >
-                      <span>— Не назначен</span>
-                      {selectedAssigneeIds.length === 0 && <Check className="w-3.5 h-3.5 text-blue-400" />}
-                    </div>
+                    {/* Опция "Не назначен" скрыта при создании новой задачи, так как поле обязательно */}
+                    {initialData && (
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleClearAllSelected();
+                        }}
+                        className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs cursor-pointer select-none transition-colors ${
+                          selectedAssigneeIds.length === 0
+                            ? 'bg-blue-600/15 text-blue-200 border border-blue-500/30 font-semibold'
+                            : 'text-gray-400 hover:bg-[#1F222B] hover:text-white'
+                        }`}
+                      >
+                        <span>— Не назначен</span>
+                        {selectedAssigneeIds.length === 0 && <Check className="w-3.5 h-3.5 text-blue-400" />}
+                      </div>
+                    )}
 
                     {filteredEmployees.length === 0 ? (
                       <div className="py-4 text-center text-gray-500 text-xs">

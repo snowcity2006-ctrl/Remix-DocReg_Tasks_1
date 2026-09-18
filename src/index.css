@@ -358,7 +358,7 @@ html:not(.dark) label {
   font-weight: 600;
 }
 
-/* Light mode badge and alert styling */
+/* Light mode badge, status pills, and alert styling with enhanced contrast */
 html:not(.dark) [class*="bg-blue-950"] {
   background-color: #eff6ff !important;
   border-color: #bfdbfe !important;
@@ -367,32 +367,87 @@ html:not(.dark) [class*="bg-blue-950"] {
 html:not(.dark) [class*="bg-blue-950"] [class*="text-blue-300"],
 html:not(.dark) [class*="bg-blue-950"] [class*="text-blue-400"],
 html:not(.dark) [class*="text-blue-300"] {
-  color: #2563eb !important;
+  color: #1d4ed8 !important; /* Blue 700 для безупречного контраста 5.2+:1 */
 }
 
+/* Углубленный синий для кнопок и надписей в светлой теме */
+html:not(.dark) .text-blue-400 {
+  color: #1d4ed8 !important;
+}
+
+html:not(.dark) .text-blue-500 {
+  color: #1e40af !important;
+}
+
+/* Изумрудные/зеленые бейджи в таблицах и карточках светлой темы */
 html:not(.dark) [class*="bg-emerald-950"] {
   background-color: #ecfdf5 !important;
   border-color: #a7f3d0 !important;
 }
 
+html:not(.dark) .text-emerald-400,
+html:not(.dark) .text-emerald-500,
+html:not(.dark) [class*="text-emerald-400"] {
+  color: #047857 !important; /* Emerald 700 - отличная четкость на светлом фоне */
+}
+
+html:not(.dark) .bg-emerald-500\/10,
+html:not(.dark) .bg-emerald-600\/10,
+html:not(.dark) .bg-emerald-600\/20 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+/* Янтарные / желтые статусы («Срок сегодня» и предупреждения) в светлой теме */
 html:not(.dark) [class*="bg-amber-950"] {
   background-color: #fffbeb !important;
   border-color: #fde68a !important;
 }
 
+html:not(.dark) .text-amber-300,
+html:not(.dark) .text-amber-400,
 html:not(.dark) [class*="text-amber-100"],
 html:not(.dark) [class*="text-amber-200"],
-html:not(.dark) [class*="text-amber-300"] {
-  color: #b45309 !important;
+html:not(.dark) [class*="text-amber-300"],
+html:not(.dark) [class*="text-amber-400"] {
+  color: #b45309 !important; /* Amber 700 с контрастом 4.8+:1 */
 }
 
+html:not(.dark) .bg-amber-400\/10,
+html:not(.dark) .bg-amber-500\/10 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+/* Оранжевые акценты (включая кнопку Бэкап в шапке) */
+html:not(.dark) .text-orange-400,
+html:not(.dark) .text-orange-300 {
+  color: #c2410c !important; /* Orange 700 для высокой четкости */
+}
+
+/* Красные / розовые бейджи просрочки в светлой теме */
 html:not(.dark) [class*="bg-rose-950"] {
   background-color: #fff1f2 !important;
   border-color: #fecdd3 !important;
 }
 
-html:not(.dark) [class*="text-rose-300"] {
-  color: #e11d48 !important;
+html:not(.dark) .text-rose-400,
+html:not(.dark) [class*="text-rose-300"],
+html:not(.dark) [class*="text-rose-400"] {
+  color: #be123c !important; /* Rose 700 - контраст 5.5+:1 */
+}
+
+html:not(.dark) .bg-rose-500\/10,
+html:not(.dark) .bg-rose-600\/20 {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+}
+
+/* Плейсхолдеры в поисковых строках и полях ввода в светлой теме */
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #64748b !important; /* Slate 500 вместо блеклого Slate 400 */
+  opacity: 1 !important;
 }
 
 /* Catch-all safety for text-white in light mode when not on dark/colored buttons or badges */
